@@ -18,8 +18,36 @@ export class AccountComponent implements OnInit {
   usersrole = []
   usersemail = []
 
+  newName: ''
+  newEmail: ''
+  newRole: string
+  ofGroupAdminRole: boolean
+
   constructor(private router: Router, private http: HttpClient) {}
   ngOnInit() {}
+
+  addUser() {
+    if (this.ofGroupAdminRole == true) {
+      this.newRole = 'groupAdmin'
+    } else {
+      this.newRole = 'users'
+    }
+
+    if (this.role == 'superAdmin') {
+      console.log(this.newRole)
+      this.http
+        .post('http://localhost:3000/create/users', {
+          newName: this.newName,
+          newEmail: this.newEmail,
+          newRole: this.newRole
+        })
+        .subscribe((data: any) => {
+          console.log(data)
+        })
+    } else {
+      alert('not super')
+    }
+  }
 
   Clicked() {
     sessionStorage.setItem('username', this.name)

@@ -26,8 +26,39 @@ app.get('/senddata', function(req, res) {
   })
 })
 
+app.post('/create/users', function(req, res) {
+  // if (role == 'super_admin')
+  var userObj
+  var createUser = req.body.newName
+  var createEmail = req.body.newEmail
+  var createRole = req.body.newRole
+  var createValid = req.body.valid
+  fs.readFile('./data/data.json', 'utf8', function(err, data) {
+    users = JSON.parse(data)
+    for (let i = 0; i < users.length; i++) {
+      if (createUser != users[i].username) {
+        userObj = JSON.parse(data)
+        createValid = 'false'
+        userObj.push({
+          username: createUser,
+          email: createEmail,
+          valid: createValid,
+          role: createRole
+        })
+        var newUser = JSON.stringify(userObj)
+        fs.writeFile('./data/data.json', newUser, 'utf8', function(err) {
+          res.send({ username: createUser, email: createEmail })
+        })
+        break
+      } else {
+        console.log('hmmmm')
+        break
+      }
+    }
+  })
+})
+
 app.post('/api/auth', function(req, res) {
-  // console.log(req.body)
   validusers = {}
   validusers.username = req.body.username
   validusers.pwd = req.body.pwd
@@ -37,7 +68,6 @@ app.post('/api/auth', function(req, res) {
 
   fs.readFile('./data/data.json', 'utf8', function(err, data) {
     users = JSON.parse(data)
-    // console.log('here are ' + users)
     for (let i = 0; i < users.length; i++) {
       if (validusers.username == users[i].username && validusers.pwd == req.body.pwd) {
         validusers.birthdate = users[i].birthday

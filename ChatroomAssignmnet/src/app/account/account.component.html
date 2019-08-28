@@ -12,3 +12,19 @@
   <li *ngFor="let item of usersemail; let i = index">{{ item }}</li>
   <li *ngFor="let item of usersrole; let i = index">{{ item }}</li>
 </ul>
+<!-- *ngIf="usersrole == 'groupAdmin'" -->
+<form>
+  <label>name</label>
+  <input type="text" [(ngModel)]="newName" id="newName" name="newName" placeholder="newName" />
+
+  <label>email</label>
+  <input type="text" [(ngModel)]="newEmail" id="newEmail" name="newEmail" placeholder="newEmail" />
+  <input
+    type="checkbox"
+    [(ngModel)]="ofGroupAdminRole"
+    id="ofGroupAdminRole"
+    name="ofGroupAdminRole"
+    placeholder="ofGroupAdminRole"
+  />
+  <input type="submit" (click)="addUser()" class="fadeIn fourth" value="AddUser" />
+</form>
