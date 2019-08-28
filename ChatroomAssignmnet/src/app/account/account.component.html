@@ -1,0 +1,14 @@
+<h1>Account</h1>
+<h4>name: {{ name }}</h4>
+<h4>age: {{ age }}</h4>
+<h4>bdate: {{ birthday }}</h4>
+<h4>email: {{ email }}</h4>
+<h4>role: {{ role }}</h4>
+<!-- <input type="submit" (click)="Clicked()" class="fadeIn fourth" value="Edit" /> -->
+<input type="submit" (click)="showed()" value="Show" />
+
+<ul>
+  <li *ngFor="let item of usersinfo; let i = index">{{ i }} Name: {{ item }}</li>
+  <li *ngFor="let item of usersemail; let i = index">{{ item }}</li>
+  <li *ngFor="let item of usersrole; let i = index">{{ item }}</li>
+</ul>
