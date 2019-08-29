@@ -8,9 +8,25 @@
 <input type="submit" (click)="showed()" value="Show" />
 
 <ul>
-  <li *ngFor="let item of usersinfo; let i = index">{{ i }} Name: {{ item }}</li>
-  <li *ngFor="let item of usersemail; let i = index">{{ item }}</li>
-  <li *ngFor="let item of usersrole; let i = index">{{ item }}</li>
+  <li *ngFor="let item of usersinfo; let i = index">
+    Name: {{ item }}
+    <button type="submit" (click)="addtogroup()" class="fadeIn fourth" value="addtogroup">
+      Add to group
+    </button>
+    <!-- <input type="radio" name="deleteUse" value="{{ item }}" /> -->
+    <button
+      type="submit"
+      (click)="deleteUser()"
+      id="deleteUse"
+      name="deleteUse"
+      class="fadeIn fourth"
+      value="{{ item }}"
+    >
+      Delete
+    </button>
+  </li>
+  <!-- <li *ngFor="let item of usersemail; let i = index">{{ item }}</li>
+  <li *ngFor="let item of usersrole; let i = index">{{ item }}</li> -->
 </ul>
 <!-- *ngIf="usersrole == 'groupAdmin'" -->
 <form>

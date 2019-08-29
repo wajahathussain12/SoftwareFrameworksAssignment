@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { HttpClient } from '@angular/common/http'
+import { observable } from 'rxjs'
 
 @Component({
   selector: 'app-account',
@@ -23,8 +24,23 @@ export class AccountComponent implements OnInit {
   newRole: string
   ofGroupAdminRole: boolean
 
+  deleteUse: ''
+
   constructor(private router: Router, private http: HttpClient) {}
   ngOnInit() {}
+
+  deleteUser() {
+    console.log(this.usersinfo)
+    for (let i = 0; i < this.usersinfo.length; i++) {
+      if (this.usersinfo[i] == this.usersinfo) {
+      }
+      // if(this.usersinfo[i] == )
+      // this.http.delete('http://localhost:3000/delete/user', {}).subscribe((data: any) => {
+      //   console.log(data)
+      // })
+      break
+    }
+  }
 
   addUser() {
     if (this.ofGroupAdminRole == true) {
@@ -32,7 +48,6 @@ export class AccountComponent implements OnInit {
     } else {
       this.newRole = 'users'
     }
-
     if (this.role == 'superAdmin') {
       console.log(this.newRole)
       this.http
@@ -46,6 +61,17 @@ export class AccountComponent implements OnInit {
         })
     } else {
       alert('not super')
+    }
+  }
+
+  addtogroup() {
+    for (let i = 0; i < this.usersinfo.length; i++) {
+      console.log(this.usersinfo[i])
+      console.log('heheh')
+      this.http.get('http://localhost:3000/create/group', {}).subscribe((data: any) => {
+        console.log(data)
+      })
+      break
     }
   }
 
@@ -70,7 +96,6 @@ export class AccountComponent implements OnInit {
             this.usersinfo.push(data[i].username)
             this.usersrole.push(data[i].role)
             this.usersemail.push(data[i].email)
-            console.log(data[i].username)
           }
           break
         } else if (this.role == 'superAdmin') {

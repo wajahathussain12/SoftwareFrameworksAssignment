@@ -10,7 +10,7 @@ import { HttpClient } from '@angular/common/http'
 })
 export class LoginComponent implements OnInit {
   name = ''
-  password = ''
+  email = ''
   correct = false
   server = 'http://localhost:3000/api/auth'
 
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
 
   itemClicked() {
     this.http
-      .post('http://localhost:3000/api/auth', { username: this.name, password: this.password })
+      .post('http://localhost:3000/api/auth', { username: this.name, email: this.email })
       .subscribe((data: any) => {
         // console.log(data)
         if (data.valid == true) {

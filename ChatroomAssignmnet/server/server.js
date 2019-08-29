@@ -26,8 +26,15 @@ app.get('/senddata', function(req, res) {
   })
 })
 
+app.post('/create/group', function(req, res) {
+  console.log(req.body)
+})
+
+app.delete('delete/user', function(req, res) {
+  console.log(req.body)
+})
+
 app.post('/create/users', function(req, res) {
-  // if (role == 'super_admin')
   var userObj
   var createUser = req.body.newName
   var createEmail = req.body.newEmail
@@ -61,7 +68,7 @@ app.post('/create/users', function(req, res) {
 app.post('/api/auth', function(req, res) {
   validusers = {}
   validusers.username = req.body.username
-  validusers.pwd = req.body.pwd
+  validusers.email = req.body.email
   validusers.birthdate = req.body.birthday
   validusers.age = req.body.age
   validusers.valid = req.body.valid
@@ -69,7 +76,7 @@ app.post('/api/auth', function(req, res) {
   fs.readFile('./data/data.json', 'utf8', function(err, data) {
     users = JSON.parse(data)
     for (let i = 0; i < users.length; i++) {
-      if (validusers.username == users[i].username && validusers.pwd == req.body.pwd) {
+      if (validusers.username == users[i].username && validusers.email == users[i].email) {
         validusers.birthdate = users[i].birthday
         validusers.age = users[i].age
         validusers.email = users[i].email

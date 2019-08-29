@@ -10,17 +10,15 @@
         placeholder="name"
       />
       <input
-        type="text"
-        [(ngModel)]="password"
-        id="password"
+        type="email"
+        [(ngModel)]="email"
+        id="email"
         class="fadeIn third"
-        name="password"
-        placeholder="password"
+        name="email"
+        placeholder="email"
       />
       <input type="submit" (click)="itemClicked()" class="fadeIn fourth" value="Log In" />
     </form>
-    <div id="formFooter">
-      <a class="underlineHover" href="#">Forgot Password?</a>
-    </div>
+    <div id="formFooter"></div>
   </div>
 </div>
