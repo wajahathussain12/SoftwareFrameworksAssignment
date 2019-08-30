@@ -13,15 +13,17 @@
     <button type="submit" (click)="addtogroup(item)" class="fadeIn fourth" value="addtogroup">
       Add to group
     </button>
-    <button
-      type="submit"
-      (click)="deleteUser(item)"
-      id="deleteUse"
-      name="deleteUse"
-      class="fadeIn fourth"
-    >
-      Delete
-    </button>
+    <div *ngIf="role == 'superAdmin'">
+      <button
+        type="submit"
+        (click)="deleteUser(item)"
+        id="deleteUse"
+        name="deleteUse"
+        class="fadeIn fourth"
+      >
+        Delete
+      </button>
+    </div>
   </li>
 </ul>
 <div *ngIf="role == 'superAdmin' || role == 'groupAdmin'">

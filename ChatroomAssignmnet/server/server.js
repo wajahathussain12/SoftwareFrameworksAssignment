@@ -51,10 +51,13 @@ app.post('/create/group', function(req, res) {
   var createGroup = req.body.group
   fs.readFile('./data/groupfile.json', 'utf8', function(err, data) {
     users = JSON.parse(data)
+    let count = 0
     for (let i = 0; i < users.length; i++) {
       if (createUser != users[i].username) {
+        count = users.length + 1
         userObj = JSON.parse(data)
         userObj.push({
+          id: count,
           username: createUser,
           group: createGroup
         })

@@ -85,11 +85,11 @@ export class AccountComponent implements OnInit {
   }
 
   Clicked() {
-    sessionStorage.setItem('username', this.name)
-    sessionStorage.setItem('userage', this.age)
-    sessionStorage.setItem('useremail', this.email)
-    sessionStorage.setItem('birthdate', this.birthday)
-    sessionStorage.setItem('role', this.role)
+    localStorage.setItem('username', this.name)
+    localStorage.setItem('userage', this.age)
+    localStorage.setItem('useremail', this.email)
+    localStorage.setItem('birthdate', this.birthday)
+    localStorage.setItem('role', this.role)
 
     this.router.navigateByUrl('/profile')
   }
