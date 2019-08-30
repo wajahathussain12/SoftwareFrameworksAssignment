@@ -26,14 +26,50 @@ app.get('/senddata', function(req, res) {
   })
 })
 
+app.post('/delete/user', function(req, res) {
+  console.log(req.body)
+  var deleteUser = req.body.deleteUser
+  fs.readFile('./data/data.json', 'utf8', function(err, data) {
+    let userData = JSON.parse(data)
+    for (let i = 0; i < userData.length; i++) {
+      if (userData[i].username == deleteUser) {
+        userData.splice(i, 1)
+      }
+    }
+    newdata = JSON.stringify(userData)
+    fs.writeFile('./data/data.json', newdata, 'utf8', function(err) {})
+    // console.log(userData)
+    res.send(userData)
+  })
+})
+
 app.post('/create/group', function(req, res) {
   console.log(req.body)
+  console.log('add to group')
+  var userObj
+  var createUser = req.body.user
+  var createGroup = req.body.group
+  fs.readFile('./data/groupfile.json', 'utf8', function(err, data) {
+    users = JSON.parse(data)
+    for (let i = 0; i < users.length; i++) {
+      if (createUser != users[i].username) {
+        userObj = JSON.parse(data)
+        userObj.push({
+          username: createUser,
+          group: createGroup
+        })
+        var newUser = JSON.stringify(userObj)
+        fs.writeFile('./data/groupfile.json', newUser, 'utf8', function(err) {
+          res.send({ username: createUser })
+        })
+        break
+      } else {
+        console.log('hmmmm')
+        break
+      }
+    }
+  })
 })
-
-app.delete('delete/user', function(req, res) {
-  console.log(req.body)
-})
-
 app.post('/create/users', function(req, res) {
   var userObj
   var createUser = req.body.newName
@@ -42,11 +78,15 @@ app.post('/create/users', function(req, res) {
   var createValid = req.body.valid
   fs.readFile('./data/data.json', 'utf8', function(err, data) {
     users = JSON.parse(data)
+    let count = 0
     for (let i = 0; i < users.length; i++) {
       if (createUser != users[i].username) {
+        count = users.length + 1
+        console.log(count)
         userObj = JSON.parse(data)
         createValid = 'false'
         userObj.push({
+          id: count,
           username: createUser,
           email: createEmail,
           valid: createValid,

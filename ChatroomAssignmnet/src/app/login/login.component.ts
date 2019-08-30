@@ -26,25 +26,17 @@ export class LoginComponent implements OnInit {
     this.http
       .post('http://localhost:3000/api/auth', { username: this.name, email: this.email })
       .subscribe((data: any) => {
-        // console.log(data)
         if (data.valid == true) {
           console.log(data)
-          sessionStorage.setItem('username', data.username)
-          sessionStorage.setItem('useremail', data.email)
-          sessionStorage.setItem('userage', data.age)
-          sessionStorage.setItem('userbirthday', data.birthdate)
-          sessionStorage.setItem('userrole', data.role)
+          localStorage.setItem('username', data.username)
+          localStorage.setItem('useremail', data.email)
+          localStorage.setItem('userage', data.age)
+          localStorage.setItem('userbirthday', data.birthdate)
+          localStorage.setItem('userrole', data.role)
           this.router.navigateByUrl('/account')
         } else {
           alert('wrong, credentials')
         }
       })
-    // this.http.get('http://localhost:3000/senddata').subscribe((data: any) => {
-    //   console.log(data)
-    // for (let i of data) {
-    //   console.log(data) // 1, "string", false
-    //   break
-    // }
-    // })
   }
 }

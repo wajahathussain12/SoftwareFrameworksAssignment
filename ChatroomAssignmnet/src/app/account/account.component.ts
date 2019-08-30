@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { HttpClient } from '@angular/common/http'
-import { observable } from 'rxjs'
 
 @Component({
   selector: 'app-account',
@@ -9,12 +8,13 @@ import { observable } from 'rxjs'
   styleUrls: ['./account.component.css']
 })
 export class AccountComponent implements OnInit {
-  email = sessionStorage.getItem('useremail')
-  name = sessionStorage.getItem('username')
-  birthday = sessionStorage.getItem('userbirthday')
-  age = sessionStorage.getItem('userage')
-  role = sessionStorage.getItem('userrole')
+  email = localStorage.getItem('useremail')
+  name = localStorage.getItem('username')
+  birthday = localStorage.getItem('userbirthday')
+  age = localStorage.getItem('userage')
+  role = localStorage.getItem('userrole')
 
+  usersObject = {}
   usersinfo = []
   usersrole = []
   usersemail = []
@@ -23,56 +23,65 @@ export class AccountComponent implements OnInit {
   newEmail: ''
   newRole: string
   ofGroupAdminRole: boolean
+  duplicate: boolean
 
   deleteUse: ''
 
   constructor(private router: Router, private http: HttpClient) {}
   ngOnInit() {}
 
-  deleteUser() {
-    console.log(this.usersinfo)
-    for (let i = 0; i < this.usersinfo.length; i++) {
-      if (this.usersinfo[i] == this.usersinfo) {
-      }
-      // if(this.usersinfo[i] == )
-      // this.http.delete('http://localhost:3000/delete/user', {}).subscribe((data: any) => {
-      //   console.log(data)
-      // })
-      break
-    }
+  deleteUser(data) {
+    this.http
+      .post('http://localhost:3000/delete/user', { deleteUser: data })
+      .subscribe((data: any) => {
+        console.log(data)
+        this.usersinfo = []
+        for (let i = 0; i < data.length; i++) {
+          this.usersinfo.push(data[i].username)
+        }
+      })
   }
 
   addUser() {
-    if (this.ofGroupAdminRole == true) {
-      this.newRole = 'groupAdmin'
-    } else {
-      this.newRole = 'users'
-    }
-    if (this.role == 'superAdmin') {
-      console.log(this.newRole)
-      this.http
-        .post('http://localhost:3000/create/users', {
-          newName: this.newName,
-          newEmail: this.newEmail,
-          newRole: this.newRole
-        })
-        .subscribe((data: any) => {
-          console.log(data)
-        })
-    } else {
-      alert('not super')
-    }
+    this.duplicate = false
+    this.http.get('http://localhost:3000/senddata', {}).subscribe((data: any) => {
+      for (let i = 0; i < data.length; i++) {
+        if (this.newName == data[i].username) {
+          alert('user exists')
+          this.duplicate = true
+          break
+        }
+      }
+
+      if (this.duplicate != true) {
+        if (this.ofGroupAdminRole == true) {
+          this.newRole = 'groupAdmin'
+        } else {
+          this.newRole = 'users'
+        }
+        if (this.role == 'superAdmin' || this.role == 'groupAdmin') {
+          this.http
+            .post('http://localhost:3000/create/users', {
+              newName: this.newName,
+              newEmail: this.newEmail,
+              newRole: this.newRole
+            })
+            .subscribe((data: any) => {
+              console.log(data)
+            })
+        } else {
+          alert('not allowed')
+        }
+      }
+    })
   }
 
-  addtogroup() {
-    for (let i = 0; i < this.usersinfo.length; i++) {
-      console.log(this.usersinfo[i])
-      console.log('heheh')
-      this.http.get('http://localhost:3000/create/group', {}).subscribe((data: any) => {
-        console.log(data)
+  addtogroup(data) {
+    this.http
+      .post('http://localhost:3000/create/group', { user: data, group: 1 })
+      .subscribe((data: any) => {
+        // console.log(data)
       })
-      break
-    }
   }
 
   Clicked() {
@@ -87,6 +96,7 @@ export class AccountComponent implements OnInit {
 
   showed() {
     this.http.get('http://localhost:3000/senddata', {}).subscribe((data: any) => {
+      this.usersObject = data
       for (let i = 0; i < data.length; i++) {
         if (this.role == 'groupAdmin') {
           this.usersinfo = []
@@ -106,7 +116,7 @@ export class AccountComponent implements OnInit {
             this.usersinfo.push(data[i].username)
             this.usersrole.push(data[i].role)
             this.usersemail.push(data[i].email)
-            console.log(data[i].username)
+            // console.log(data[i].username)
           }
           break
         } else if (this.role == 'groupAssis') {
