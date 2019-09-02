@@ -1,11 +1,36 @@
 <h1>Account</h1>
-<h4>name: {{ name }}</h4>
-<h4>age: {{ age }}</h4>
-<h4>bdate: {{ birthday }}</h4>
-<h4>email: {{ email }}</h4>
-<h4>role: {{ role }}</h4>
+<h4>Name: {{ name }}</h4>
+<h4>Age: {{ age }}</h4>
+<h4>Date Of Birth: {{ birthday }}</h4>
+<h4>Email: {{ email }}</h4>
+<h4>Role: {{ role }}</h4>
 <div *ngIf="role == 'superAdmin' || role == 'groupAdmin'">
   <input type="submit" (click)="showed()" value="Show" />
+
+  <div>
+    <form>
+      <label>Group Name</label>
+      <input
+        type="text"
+        [(ngModel)]="newGroupName"
+        id="newGroupName"
+        name="newGroupName"
+        placeholder="New Group Name"
+        required
+      />
+
+      <label>Name</label>
+      <input
+        type="text"
+        [(ngModel)]="newName"
+        id="newName"
+        name="newName"
+        placeholder="New Name"
+        required
+      />
+      <input type="submit" (click)="addGroupUser()" value="addGroupUser" />
+    </form>
+  </div>
 </div>
 <ul *ngFor="let item of usersinfo; let i = index">
   <li>
@@ -26,24 +51,25 @@
     </div>
   </li>
 </ul>
+
 <div *ngIf="role == 'superAdmin' || role == 'groupAdmin'">
   <form>
-    <label>name</label>
+    <label>Name</label>
     <input
       type="text"
       [(ngModel)]="newName"
       id="newName"
       name="newName"
-      placeholder="newName"
+      placeholder="New Name"
       required
     />
-    <label>email</label>
+    <label>Email</label>
     <input
       type="text"
       [(ngModel)]="newEmail"
       id="newEmail"
       name="newEmail"
-      placeholder="newEmail"
+      placeholder="New Email"
       required
     />
     <input
@@ -55,4 +81,11 @@
     />
     <input type="submit" (click)="addUser()" class="fadeIn fourth" value="AddUser" />
   </form>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <ul class="nav navbar-nav">
+        <li>hi</li>
+      </ul>
+    </div>
+  </nav>
 </div>

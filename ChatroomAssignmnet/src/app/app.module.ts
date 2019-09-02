@@ -10,10 +10,11 @@ import { HttpClientModule } from '@angular/common/http'
 import { CommonModule } from '@angular/common'
 import { SocketService } from './socket.service'
 import { LoginComponent } from './login/login.component';
-import { AccountComponent } from './account/account.component'
+import { AccountComponent } from './account/account.component';
+import { GroupComponent } from './group/group.component'
 
 @NgModule({
-  declarations: [AppComponent, ChatComponent, LoginComponent, AccountComponent],
+  declarations: [AppComponent, ChatComponent, LoginComponent, AccountComponent, GroupComponent],
   imports: [BrowserModule, AppRoutingModule, FormsModule, CommonModule, HttpClientModule],
   providers: [SocketService],
   bootstrap: [AppComponent]

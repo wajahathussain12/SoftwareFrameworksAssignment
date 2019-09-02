@@ -13,16 +13,17 @@ export class ChatComponent implements OnInit {
   ioConnection: any
 
   constructor(private socketService: SocketService) {}
-
   ngOnInit() {
     this.initIoConnection()
   }
+  // to connect to the socket
   private initIoConnection() {
     this.socketService.initSocket()
     this.ioConnection = this.socketService.onMessage().subscribe((message: string) => {
       this.messages.push(message)
     })
   }
+  // the chat component to display the chat
   private chat() {
     if (this.messagecontent) {
       console.log('messaage ' + this.messagecontent)

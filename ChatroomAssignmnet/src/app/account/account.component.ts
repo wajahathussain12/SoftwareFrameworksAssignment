@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ComponentFactoryResolver } from '@angular/core'
 import { Router } from '@angular/router'
 import { HttpClient } from '@angular/common/http'
 
@@ -18,18 +18,17 @@ export class AccountComponent implements OnInit {
   usersinfo = []
   usersrole = []
   usersemail = []
-
+  newGroupName: ''
   newName: ''
   newEmail: ''
   newRole: string
   ofGroupAdminRole: boolean
   duplicate: boolean
-
   deleteUse: ''
 
   constructor(private router: Router, private http: HttpClient) {}
   ngOnInit() {}
-
+  // to delete the user collect the data of the user from the angular and sent to server side.
   deleteUser(data) {
     this.http
       .post('http://localhost:3000/delete/user', { deleteUser: data })
@@ -41,7 +40,49 @@ export class AccountComponent implements OnInit {
         }
       })
   }
+  // the grouo button added to the angular side to sent to new page
+  group() {
+    this.router.navigateByUrl('/group')
+  }
+  addGroupUser() {
+    this.duplicate = false
+    this.http
+      .post('http://localhost:3000/create/group', {
+        newGroupName: this.newGroupName,
+        newName: this.newName
+      })
+      .subscribe((data: any) => {
+        for (let i = 0; i < data.length; i++) {
+          if (this.newName == data[i].username) {
+            alert('user exists')
+            this.duplicate = true
+            break
+          }
+        }
+        if (this.duplicate != true) {
+          if (this.ofGroupAdminRole == true) {
+            this.newRole = 'groupAdmin'
+          } else {
+            this.newRole = 'users'
+          }
+          if (this.role == 'superAdmin' || this.role == 'groupAdmin') {
+            this.http
+              .post('http://localhost:3000/create/users', {
+                newName: this.newName,
+                newEmail: this.newEmail,
+                newRole: this.newRole
+              })
+              .subscribe((data: any) => {
+                console.log(data)
+              })
+          } else {
+            alert('not allowed')
+          }
+        }
+      })
+  }
 
+  // to add the new user to the data JSON file.
   addUser() {
     this.duplicate = false
     this.http.get('http://localhost:3000/senddata', {}).subscribe((data: any) => {
@@ -52,7 +93,6 @@ export class AccountComponent implements OnInit {
           break
         }
       }
-
       if (this.duplicate != true) {
         if (this.ofGroupAdminRole == true) {
           this.newRole = 'groupAdmin'
@@ -76,24 +116,25 @@ export class AccountComponent implements OnInit {
     })
   }
 
+  // to add the group to the file
   addtogroup(data) {
+    this.http.get('http://localhost:3000/group', {}).subscribe((data: any) => {
+      console.log(data)
+    })
     this.http
       .post('http://localhost:3000/create/group', { user: data, group: 1 })
-      .subscribe((data: any) => {
-        // console.log(data)
-      })
+      .subscribe((data: any) => {})
   }
-
+  // to display the users information
   Clicked() {
     localStorage.setItem('username', this.name)
     localStorage.setItem('userage', this.age)
     localStorage.setItem('useremail', this.email)
     localStorage.setItem('birthdate', this.birthday)
     localStorage.setItem('role', this.role)
-
     this.router.navigateByUrl('/profile')
   }
-
+  // to dispaly the information of al the users in the ssytem.
   showed() {
     this.http.get('http://localhost:3000/senddata', {}).subscribe((data: any) => {
       this.usersObject = data
@@ -116,7 +157,6 @@ export class AccountComponent implements OnInit {
             this.usersinfo.push(data[i].username)
             this.usersrole.push(data[i].role)
             this.usersemail.push(data[i].email)
-            // console.log(data[i].username)
           }
           break
         } else if (this.role == 'groupAssis') {

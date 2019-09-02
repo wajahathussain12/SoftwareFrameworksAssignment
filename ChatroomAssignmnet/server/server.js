@@ -11,7 +11,6 @@ const sockets = require('./socket.js')
 const server = require('./listen.js')
 const PORT = 3000
 sockets.connect(io, PORT)
-
 server.listen(http, PORT)
 
 app.use(cors())
@@ -19,6 +18,7 @@ app.use(express.static(path.join(__dirname, '../dist/ChatroomAssignment/')))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
+//All the data in the data json file is collected and sent to the Angular side
 app.get('/senddata', function(req, res) {
   fs.readFile('./data/data.json', 'utf8', function(err, data) {
     users = JSON.parse(data)
@@ -26,8 +26,8 @@ app.get('/senddata', function(req, res) {
   })
 })
 
+// to delete the user from the data json file
 app.post('/delete/user', function(req, res) {
-  console.log(req.body)
   var deleteUser = req.body.deleteUser
   fs.readFile('./data/data.json', 'utf8', function(err, data) {
     let userData = JSON.parse(data)
@@ -38,14 +38,12 @@ app.post('/delete/user', function(req, res) {
     }
     newdata = JSON.stringify(userData)
     fs.writeFile('./data/data.json', newdata, 'utf8', function(err) {})
-    // console.log(userData)
     res.send(userData)
   })
 })
 
+// to create a new goup and add to the group json file
 app.post('/create/group', function(req, res) {
-  console.log(req.body)
-  console.log('add to group')
   var userObj
   var createUser = req.body.user
   var createGroup = req.body.group
@@ -73,6 +71,17 @@ app.post('/create/group', function(req, res) {
     }
   })
 })
+
+// to add the grup array to the file
+app.get('/group', function(req, res) {
+  fs.readFile('./data/grouptestfile.json', 'utf8', function(err, data) {
+    console.log(data)
+    users = JSON.parse(data)
+    // res.send(users)
+  })
+})
+
+// to create the new user and  add ot the JSON file
 app.post('/create/users', function(req, res) {
   var userObj
   var createUser = req.body.newName
@@ -108,6 +117,7 @@ app.post('/create/users', function(req, res) {
   })
 })
 
+// to check th eauthentication of the user and collect the data and send to angular
 app.post('/api/auth', function(req, res) {
   validusers = {}
   validusers.username = req.body.username
@@ -115,7 +125,6 @@ app.post('/api/auth', function(req, res) {
   validusers.birthdate = req.body.birthday
   validusers.age = req.body.age
   validusers.valid = req.body.valid
-
   fs.readFile('./data/data.json', 'utf8', function(err, data) {
     users = JSON.parse(data)
     for (let i = 0; i < users.length; i++) {
