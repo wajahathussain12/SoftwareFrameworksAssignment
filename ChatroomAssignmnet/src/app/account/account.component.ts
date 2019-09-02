@@ -40,10 +40,25 @@ export class AccountComponent implements OnInit {
         }
       })
   }
+
+  makeSuper(data) {
+    console.log(data)
+    this.http
+      .post('http://localhost:3000/create/super', { makeSuper: data })
+      .subscribe((data: any) => {
+        console.log(data)
+        this.usersinfo = []
+        for (let i = 0; i < data.length; i++) {
+          this.usersinfo.push(data[i].username)
+        }
+      })
+  }
+
   // the grouo button added to the angular side to sent to new page
   group() {
     this.router.navigateByUrl('/group')
   }
+  // add the group to the user with the new group name
   addGroupUser() {
     this.duplicate = false
     this.http
@@ -53,7 +68,8 @@ export class AccountComponent implements OnInit {
       })
       .subscribe((data: any) => {
         for (let i = 0; i < data.length; i++) {
-          if (this.newName == data[i].username) {
+          console.log(data)
+          if (this.newGroupName == data[i].group) {
             alert('user exists')
             this.duplicate = true
             break
@@ -75,6 +91,7 @@ export class AccountComponent implements OnInit {
               .subscribe((data: any) => {
                 console.log(data)
               })
+            alert('added')
           } else {
             alert('not allowed')
           }
@@ -118,12 +135,10 @@ export class AccountComponent implements OnInit {
 
   // to add the group to the file
   addtogroup(data) {
-    this.http.get('http://localhost:3000/group', {}).subscribe((data: any) => {
-      console.log(data)
+    console.log(data)
+    this.http.post('http://localhost:3000/group', { newUser: data }).subscribe((data: any) => {
+      // console.log(data)
     })
-    this.http
-      .post('http://localhost:3000/create/group', { user: data, group: 1 })
-      .subscribe((data: any) => {})
   }
   // to display the users information
   Clicked() {
@@ -163,10 +178,12 @@ export class AccountComponent implements OnInit {
           this.usersinfo = []
           this.usersrole = []
           this.usersemail = []
+          alert('Not authorised, Only the person with preivelage is allowed')
         } else {
           this.usersinfo = []
           this.usersrole = []
           this.usersemail = []
+          alert('Not authorised, Only the person with preivelage is allowed')
         }
       }
     })

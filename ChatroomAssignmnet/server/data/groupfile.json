@@ -1,1 +1,10 @@
-[{"id":1,"username":["maaz","waj"],"group":1},{"id":2,"username":["maaz","waj"],"group":1},{"id":3,"username":["maaz","waj"],"group":1},{"id":7,"username":["maaz","waj"],"group":"hi"},{"id":8,"username":["maaz","waj"],"group":"hi"},{"id":6,"username":"hihihih","group":"hi"},{"id":7,"username":"hihihih","group":"hi"},{"id":8},{"id":9,"username":"zoha","group":1},{"id":10,"group":1}]
+[
+	{
+		"username": "waj",
+		"group": "hi"
+	},
+	{
+		"username": "waj",
+		"group": "hiaihaiha"
+	}
+]

@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {}
   // to dispaly authenticat the user and display their data and send the information to the account page.
-  itemClicked() {
+  LoggedIn() {
     this.http
       .post('http://localhost:3000/api/auth', { username: this.name, email: this.email })
       .subscribe((data: any) => {

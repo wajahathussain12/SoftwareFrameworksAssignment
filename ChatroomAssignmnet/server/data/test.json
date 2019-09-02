@@ -2,22 +2,22 @@
 	{
 		"id": "1",
 		"username": "super",
-		"email": "super@abc.com",
+		"email": "super@com.au",
 		"age": "32",
 		"pwd": "123",
 		"birthday": "16/05/1987",
-		"role": "groupAdmin",
+		"role": "superAdmin",
 		"valid": "false",
 		"roleValue": "false"
 	},
 	{
 		"id": "2",
 		"username": "zoha",
-		"email": "zoha@abc.com",
+		"email": "zoha@com.au",
 		"age": "3",
 		"pwd": "123",
 		"birthday": "16/05/2016",
-		"role": "superAdmin",
+		"role": "groupAdmin",
 		"valid": "false",
 		"roleValue": "false"
 	},

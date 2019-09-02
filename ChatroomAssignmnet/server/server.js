@@ -42,42 +42,64 @@ app.post('/delete/user', function(req, res) {
   })
 })
 
+app.post('/create/super', function(req, res) {
+  var makeSuper = req.body.makeSuper
+  fs.readFile('./data/data.json', 'utf8', function(err, data) {
+    let userData = JSON.parse(data)
+    for (let i = 0; i < userData.length; i++) {
+      if (userData[i].username == makeSuper) {
+        userData[i].role = 'superAdmin'
+      }
+    }
+    newdata = JSON.stringify(userData)
+    fs.writeFile('./data/data.json', newdata, 'utf8', function(err) {})
+    res.send(userData)
+  })
+})
+
 // to create a new goup and add to the group json file
 app.post('/create/group', function(req, res) {
   var userObj
-  var createUser = req.body.user
-  var createGroup = req.body.group
+  var createUser = req.body.newName
+  var createGroup = req.body.newGroupName
+  var duplicate
   fs.readFile('./data/groupfile.json', 'utf8', function(err, data) {
     users = JSON.parse(data)
-    let count = 0
+    duplicate = false
     for (let i = 0; i < users.length; i++) {
-      if (createUser != users[i].username) {
-        count = users.length + 1
-        userObj = JSON.parse(data)
-        userObj.push({
-          id: count,
-          username: createUser,
-          group: createGroup
-        })
-        var newUser = JSON.stringify(userObj)
-        fs.writeFile('./data/groupfile.json', newUser, 'utf8', function(err) {
-          res.send({ username: createUser })
-        })
-        break
-      } else {
-        console.log('hmmmm')
-        break
+      if (createGroup == users[i].group) {
+        duplicate = true
       }
+    }
+    if (duplicate != true) {
+      console.log(createGroup)
+      // console.log(createUser)
+      userObj = JSON.parse(data)
+      userObj.push({
+        username: createUser,
+        group: createGroup
+      })
+      var newUser = JSON.stringify(userObj)
+      fs.writeFile('./data/groupfile.json', newUser, 'utf8', function(err) {
+        res.send({ username: createUser })
+      })
+    } else {
+      console.log('hmmmm')
     }
   })
 })
 
 // to add the grup array to the file
-app.get('/group', function(req, res) {
+app.post('/group', function(req, res) {
+  var newObj
+  var newUser = req.body.newUser
+  console.log(req.body.newUser)
   fs.readFile('./data/grouptestfile.json', 'utf8', function(err, data) {
-    console.log(data)
     users = JSON.parse(data)
-    // res.send(users)
+    var newUsers = JSON.stringify(users)
+    // fs.writeFile('./data/groupfile.json', newUser, 'utf8', function(err) {
+    res.send({ username: createUser })
+    // })
   })
 })
 
@@ -94,7 +116,6 @@ app.post('/create/users', function(req, res) {
     for (let i = 0; i < users.length; i++) {
       if (createUser != users[i].username) {
         count = users.length + 1
-        console.log(count)
         userObj = JSON.parse(data)
         createValid = 'false'
         userObj.push({

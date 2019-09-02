@@ -5,20 +5,77 @@
 <h4>Email: {{ email }}</h4>
 <h4>Role: {{ role }}</h4>
 <div *ngIf="role == 'superAdmin' || role == 'groupAdmin'">
-  <input type="submit" (click)="showed()" value="Show" />
-
+  <input type="button" (click)="showed()" value="Show" class="btn btn-secondary" />
   <div>
     <form>
-      <label>Group Name</label>
-      <input
-        type="text"
-        [(ngModel)]="newGroupName"
-        id="newGroupName"
-        name="newGroupName"
-        placeholder="New Group Name"
-        required
-      />
+      <div class="form-group">
+        <label>Create Group </label>
+        <input
+          type="text"
+          [(ngModel)]="newGroupName"
+          id="newGroupName"
+          name="newGroupName"
+          placeholder="New Group Name"
+          class="form-control"
+          required
+        />
+        <input
+          type="text"
+          [(ngModel)]="newName"
+          id="newName"
+          name="newName"
+          placeholder="User Name"
+          class="form-control"
+          required
+        />
+        <input type="button" (click)="addGroupUser()" value="New Group" class="btn btn-success" />
+      </div>
+    </form>
+  </div>
+</div>
+<ul *ngFor="let item of usersinfo; let i = index">
+  <li>
+    Name: {{ item }}
+    <button
+      type="button"
+      (click)="addtogroup(item)"
+      class="fadeIn fourth"
+      value="New Group"
+      class="btn btn-success"
+    >
+      Add to group
+    </button>
+    <div *ngIf="role == 'superAdmin'">
+      <button
+        type="button"
+        (click)="deleteUser(item)"
+        id="deleteUse"
+        name="deleteUse"
+        class="fadeIn fourth"
+        class="btn btn-danger"
+      >
+        Delete
+      </button>
+      <div *ngIf="role == 'superAdmin'">
+        <button
+          type="button"
+          (click)="makeSuper(item)"
+          id="deleteUse"
+          name="make Use"
+          class="fadeIn fourth"
+          class="btn btn-success"
+        >
+          Add as Super
+        </button>
+      </div>
+    </div>
+  </li>
+</ul>
 
+<!-- create new user -->
+<div *ngIf="role == 'superAdmin' || role == 'groupAdmin'">
+  <form>
+    <div class="form-group">
       <label>Name</label>
       <input
         type="text"
@@ -26,65 +83,41 @@
         id="newName"
         name="newName"
         placeholder="New Name"
+        class="form-control"
         required
       />
-      <input type="submit" (click)="addGroupUser()" value="addGroupUser" />
-    </form>
-  </div>
-</div>
-<ul *ngFor="let item of usersinfo; let i = index">
-  <li>
-    Name: {{ item }}
-    <button type="submit" (click)="addtogroup(item)" class="fadeIn fourth" value="addtogroup">
-      Add to group
-    </button>
-    <div *ngIf="role == 'superAdmin'">
-      <button
-        type="submit"
-        (click)="deleteUser(item)"
-        id="deleteUse"
-        name="deleteUse"
+      <label>Email</label>
+      <input
+        type="text"
+        [(ngModel)]="newEmail"
+        id="newEmail"
+        name="newEmail"
+        placeholder="New Email"
+        class="form-control"
+        required
+      />
+      <label>Admin</label>
+      <input
+        type="checkbox"
+        [(ngModel)]="ofGroupAdminRole"
+        id="ofGroupAdminRole"
+        name="ofGroupAdminRole"
+        placeholder="ofGroupAdminRole"
+        class="form-control"
+      />
+      <input
+        type="button"
+        (click)="addUser()"
         class="fadeIn fourth"
-      >
-        Delete
-      </button>
+        value="AddUser"
+        class="btn btn-success"
+      />
     </div>
-  </li>
-</ul>
-
-<div *ngIf="role == 'superAdmin' || role == 'groupAdmin'">
-  <form>
-    <label>Name</label>
-    <input
-      type="text"
-      [(ngModel)]="newName"
-      id="newName"
-      name="newName"
-      placeholder="New Name"
-      required
-    />
-    <label>Email</label>
-    <input
-      type="text"
-      [(ngModel)]="newEmail"
-      id="newEmail"
-      name="newEmail"
-      placeholder="New Email"
-      required
-    />
-    <input
-      type="checkbox"
-      [(ngModel)]="ofGroupAdminRole"
-      id="ofGroupAdminRole"
-      name="ofGroupAdminRole"
-      placeholder="ofGroupAdminRole"
-    />
-    <input type="submit" (click)="addUser()" class="fadeIn fourth" value="AddUser" />
   </form>
   <nav class="navbar navbar-default">
     <div class="container-fluid">
       <ul class="nav navbar-nav">
-        <li>hi</li>
+        <li></li>
       </ul>
     </div>
   </nav>
