@@ -10,6 +10,9 @@
   "author": "Wajahat Hussain",
   "license": "ISC",
   "dependencies": {
-    "cors": "^2.8.5"
+    "cors": "^2.8.5",
+    "mongodb": "^3.3.2",
+    "o": "^2.1.1",
+    "socket.io": "^2.3.0"
   }
 }
