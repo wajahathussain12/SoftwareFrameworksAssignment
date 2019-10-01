@@ -7,9 +7,7 @@ import { Users } from '../users'
 })
 export class UserService {
   constructor(private http: HttpClient) {}
-  add(users: Users) {
-    return this.http.post<any>('http://localhost:3000/api/auth', users)
-  }
+
   create(users: Users) {
     return this.http.post<any>('http://localhost:3000/createUser', users)
   }
@@ -27,5 +25,8 @@ export class UserService {
   }
   updateitem(users: Users) {
     return this.http.post<any>('http://localhost:3000/api/update', users)
+  }
+  add(users: Users) {
+    return this.http.post<any>('http://localhost:3000/api/auth', users)
   }
 }

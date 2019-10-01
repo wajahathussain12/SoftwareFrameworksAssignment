@@ -1,7 +1,4 @@
 module.exports = function(db, app, ObjectID) {
-  // var myquery = { id: 3 };
-  // db.collection("products").deleteOne(myquery);
-  //Route to delete a single item
   app.post('/deleteMember', function(req, res) {
     console.log(req.body)
     if (!req.body) {

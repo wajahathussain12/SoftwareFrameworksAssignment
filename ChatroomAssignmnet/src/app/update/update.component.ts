@@ -34,7 +34,6 @@ export class UpdateComponent implements OnInit {
       // console.log(this.idparam)
     })
     this.uData.getuser(this.idparam).subscribe(data => {
-      console.log(data)
       this.id = data[0].id
       this.username = data[0].username
       this.age = data[0].age
@@ -42,7 +41,6 @@ export class UpdateComponent implements OnInit {
       this.birthday = data[0].birthday
       this.objectId = data[0]._id
     })
-    console.log('hijhihih')
   }
   update() {
     var user: Users = new Users(

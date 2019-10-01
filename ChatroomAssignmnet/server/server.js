@@ -33,7 +33,7 @@ MongoClient.connect(
     sockets.connect(app, io)
     require('./routes/login.js')(db, app)
     require('./routes/userdata.js')(db, app)
-    require('./routes/createUser.js')(db, app)
+    require('./routes/createUser')(db, app)
     require('./routes/uservalid.js')(db, app)
     require('./routes/getusers.js')(db, app)
     require('./routes/deleteItem.js')(db, app, ObjectID)
@@ -55,3 +55,4 @@ MongoClient.connect(
     // require('./listen.js')(http)
   }
 )
+module.exports = app

@@ -1,11 +1,11 @@
-<h1>Account</h1>
-<h4>Name: {{ name }}</h4>
+<h1>Add new User</h1>
+<!-- <h4>Name: {{ name }}</h4>
 <h4>Age: {{ age }}</h4>
 <h4>Date Of Birth: {{ birthday }}</h4>
 <h4>Email: {{ email }}</h4>
-<h4>Role: {{ role }}</h4>
+<h4>Role: {{ role }}</h4> -->
 <div class="container">
-  <button (click)="newGroup()">Add Group</button>
+  <button (click)="newGroup()">Create Group</button>
 </div>
 
 <div class="container">
@@ -50,7 +50,7 @@
     </div>
     <div class="form-group">
       <button type="submit" class="btn btn-primary">
-        <i class="fa fa-plus-square"></i> Add New
+        <i class="fa fa-plus-square"></i> Create New User
       </button>
     </div>
     <div [@noticeState]="noticeName" class="alert alert-warning" role="alert">

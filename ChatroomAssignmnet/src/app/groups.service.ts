@@ -10,7 +10,6 @@ export class GroupsService {
   showGroup() {
     return this.http.get<any>('http://localhost:3000/api/showgroup')
   }
-
   showGroupData(id) {
     return this.http.post<any>('http://localhost:3000/api/getgroup', { id: id })
   }
@@ -24,7 +23,6 @@ export class GroupsService {
   checkvalidid(groupId) {
     return this.http.post<any>('http://localhost:3000/api/checkvalididgroup', { id: groupId })
   }
-
   create(group: Groups) {
     return this.http.post<any>('http://localhost:3000/createGroup', group)
   }

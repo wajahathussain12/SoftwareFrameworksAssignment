@@ -28,15 +28,12 @@ export class AddgroupComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       this.idparam = params.get('id')
-      // console.log(this.idparam)
     })
     this.uData.getuser(this.idparam).subscribe(data => {
-      console.log(data)
       this.id = data[0].id
       this.username = data[0].username
     })
     this.gData.showGroup().subscribe((data: any) => {
-      console.log(data)
       for (let i = 0; i < data.length; i++) {
         this.groupList.push(data[i].group_name)
       }
@@ -44,7 +41,6 @@ export class AddgroupComponent implements OnInit {
   }
 
   addMember(event) {
-    console.log(event)
     this.http
       .post<any>('http://localhost:3000/addmember', {
         username: this.username,

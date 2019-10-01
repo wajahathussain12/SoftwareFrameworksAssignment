@@ -23,11 +23,9 @@ export class UserslistComponent implements OnInit {
 
   ngOnInit() {
     this.uData.showUser().subscribe(data => {
-      // console.log(data)
       this.usersObjects = data
     })
     this.gData.showGroup().subscribe(data => {
-      console.log(data)
       this.groupObjects = data
     })
   }
@@ -45,7 +43,6 @@ export class UserslistComponent implements OnInit {
     }
   }
   deletegroup(id) {
-    console.log(id)
     if (confirm('Are you sure you want to delete this group')) {
       this.gData.deleteitem(id).subscribe(data => {
         if (data.ok == 1) {

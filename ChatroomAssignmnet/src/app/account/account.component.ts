@@ -83,7 +83,6 @@ export class AccountComponent implements OnInit {
     if (this.id == null) {
       this.iderrorshow = !this.iderrorshow
     } else {
-      console.log('else')
       this.newUser = new Users(
         '',
         this.id,
@@ -95,10 +94,8 @@ export class AccountComponent implements OnInit {
         this.groupAdmin
       )
       this.uData.create(this.newUser).subscribe(data => {
-        // console.log(data)
         this.noticeshow = true
         this.router.navigateByUrl('/userslist')
-        // this.router.navigateByUrl('/')
         if (data.err == null) {
           this.newProductMessage = data.num + ' new User (' + this.username + ') was added'
         } else {
